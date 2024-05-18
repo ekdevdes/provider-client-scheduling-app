@@ -1,0 +1,19 @@
+{
+    "providers": [
+        {
+            "id": 1,
+            "name": "John Doe",
+            "availability": []
+        },
+        {
+            "id": 2,
+            "name": "Jane Doe",
+            "availability": []
+        },
+        {
+            "id": 3,
+            "name": "Bob Doe",
+            "availability": []
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+{
+    "clients": [
+        {
+            "id": 1,
+            "name": "John Smith",
+            "appointment": {}
+        },
+        {
+            "id": 2,
+            "name": "Jane Smith",
+            "appointment": {}
+        },
+        {
+            "id": 3,
+            "name": "Bob Smith",
+            "appointment": {}
+        }
+    ]
+}
