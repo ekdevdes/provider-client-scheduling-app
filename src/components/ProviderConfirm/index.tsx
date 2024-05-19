@@ -4,11 +4,11 @@ import { Dispatch } from '@reduxjs/toolkit'
 import { AppState, Provider, ActionTypes } from '../../types'
 import groupBy from 'lodash/groupBy'
 
-import Typography from '@mui/material/Typography'
 import Paper from "@mui/material/Paper"
 import Box from "@mui/material/Box"
 import Button from '@mui/material/Button'
-import Stack from '@mui/material/Stack'
+
+import Confirm from '../Confirm'
 
 type ProviderConfirmProps = {
   provider: Provider,
@@ -26,26 +26,9 @@ const ProviderConfirm: FC<ProviderConfirmProps> = ({
 
   return (
     <>
-       <Typography variant="h4" sx={{ ml: 1, mb: 1 }}>
-          Thanks, {providerFirstName}
-      </Typography>
-      <Typography variant="body1" gutterBottom sx={{ ml: 1, mb: 3 }}>
-        Here's what we got, does it look right?
-      </Typography>
-      <Stack spacing={2}>
-        {Object.entries(groupedAvails).map(([day, times]) => (
-          <div>
-            <Typography variant="h6" sx={{ fontWeight: 'bold', ml: 1 }}>
-              {day}
-            </Typography>
-            {times.map(time => (
-              <Typography variant="body1" sx={{ ml: 1 }}>
-                {time.startTime} - {time.endTime}
-              </Typography>
-            ))}
-          </div>
-        ))}
-      </Stack>
+      <Confirm 
+        name={providerFirstName} 
+        avails={groupedAvails} /> 
       <Paper sx={{ mx: 1, mt: 3, position: 'fixed', bottom: 75, left: 0, right: 0 }} elevation={3}>
         <Box>
           <Button 

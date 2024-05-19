@@ -5,14 +5,16 @@ import {
   ActionTypes, 
   TabIndexAction,
   ProviderUpdateAction,
-  Provider
+  Provider,
+  SelectedAvailAction,
+  ClientProviderAction
 } from '../../types'
 
 import { providers } from '../../data/providers.json'
 import { clients } from '../../data/clients.json'
 
 const initialState: AppState = {
-  activeTabIndex: 0,
+  activeTabIndex: 1,
   providers: providers,
   clients: clients,
   providerForm: {
@@ -20,6 +22,17 @@ const initialState: AppState = {
     avails: [],
     submitted: false,
     confirmed: false
+  },
+  clientForm: {
+    isBooking: false,
+    isSubmitted: false,
+    isConfirmed: false,
+    selectedAvail: {
+      id: 0,
+      day: '',
+      startTime: '',
+      endTime: ''
+    }
   }
 };
   
@@ -35,14 +48,12 @@ const initialState: AppState = {
           providerIndex = index
 
           return provider.id === (action.payload as ProviderUpdateAction).providerId
-        }) ?? { id: 0, availability: [] }
+        }) ?? { id: 0, name: '', availability: [] }
 
         _providers[providerIndex] = {
           ...provider,
           availability: (action.payload as ProviderUpdateAction).avails
         }
-
-        console.log('updatedProviders', _providers)
         
         return {
           ...state,
@@ -52,6 +63,33 @@ const initialState: AppState = {
           },
           providers: _providers
         }
+      case ActionTypes.UPDATE_CLIENT_IS_BOOKING:
+        return {
+          ...state,
+          clientForm: {
+            ...state.clientForm,
+            isBooking: !state.clientForm.isBooking,
+            provider: (action.payload as ClientProviderAction).provider
+          }
+        }
+      case ActionTypes.UPDATE_CLIENT_IS_SUBMITTING:
+          return {
+            ...state,
+            clientForm: {
+              ...state.clientForm,
+              isSubmitted: !state.clientForm.isSubmitted,
+              selectedAvail: (action.payload as SelectedAvailAction).selectedAvail
+            }
+          }
+
+      case ActionTypes.UPDATE_CLIENT_IS_CONFIRMING:
+          return {
+            ...state,
+            clientForm: {
+              ...state.clientForm,
+              isConfirmed: !state.clientForm.isConfirmed
+            }
+          }
       case ActionTypes.CONFIRM_PROVIDER_FORM:
         return {
           ...state,

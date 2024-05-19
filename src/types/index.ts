@@ -16,11 +16,13 @@ export type ClientAppointment = {
 
 export type Provider = {
   id: number,
+  name: string,
   availability: Availability[]
 }
 
 export type Client = {
   id: number
+  name: string
   appointment: ClientAppointment | object
 }
 
@@ -31,11 +33,28 @@ export type ProviderForm = {
   confirmed: boolean
 }
 
+export type ClientForm = {
+  isBooking: boolean,
+  isSubmitted: boolean,
+  isConfirmed: boolean,
+  selectedAvail: Availability
+  provider: Provider
+}
+
 export type AppState = {
   activeTabIndex: number
   providers: Provider[]
   clients: Client[]
   providerForm: ProviderForm
+  clientForm: ClientForm
+}
+
+export type ClientProviderAction = {
+  provider: Provider
+}
+
+export type SelectedAvailAction = {
+  selectedAvail: Availability
 }
 
 export type TabIndexAction = {
@@ -49,7 +68,11 @@ export type ProviderUpdateAction = {
 
 export type Action = {
   type: string
-  payload: TabIndexAction | ProviderUpdateAction
+  payload: 
+    TabIndexAction | 
+    ProviderUpdateAction | 
+    SelectedAvailAction |
+    ClientProviderAction
 }
 
 export enum ActionTypes {
@@ -57,5 +80,8 @@ export enum ActionTypes {
   UPDATE_PROVIDER_FORM = 'UPDATE_PROVIDER_FORM',
   UPDATE_PROVIDER_AVAIL = 'UPDATE_PROVIDER_AVAIL',
   UPDATE_CLIENT_AVAIL = 'UPDATE_CLIENT_AVAIL',
-  CONFIRM_PROVIDER_FORM = 'CONFIRM_PROVIDER_FORM'
+  CONFIRM_PROVIDER_FORM = 'CONFIRM_PROVIDER_FORM',
+  UPDATE_CLIENT_IS_BOOKING = 'UPDATE_CLIENT_IS_BOOKING',
+  UPDATE_CLIENT_IS_SUBMITTING = 'UPDATE_CLIENT_IS_SUBMITTING',
+  UPDATE_CLIENT_IS_CONFIRMING = 'UPDATE_CLIENT_IS_CONFIRMING'
 }
