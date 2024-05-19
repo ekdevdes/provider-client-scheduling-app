@@ -19,7 +19,7 @@ const Done: FC<DoneProps> = ({
       <Typography variant="h4" sx={{ ml: 1, mb: 1 }}>
           Thanks, {name}
       </Typography>
-      <Typography variant="body1" gutterBottom sx={{ ml: 1, mb: 3 }}>
+      <Typography variant="body1" gutterBottom sx={{ ml: 1, mb: 3, textAlign: 'center' }}>
         {desc}
       </Typography>
     </Box>

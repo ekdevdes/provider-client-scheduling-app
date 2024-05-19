@@ -14,7 +14,7 @@ import { providers } from '../../data/providers.json'
 import { clients } from '../../data/clients.json'
 
 const initialState: AppState = {
-  activeTabIndex: 1,
+  activeTabIndex: 0,
   providers: providers,
   clients: clients,
   providerForm: {
@@ -27,6 +27,11 @@ const initialState: AppState = {
     isBooking: false,
     isSubmitted: false,
     isConfirmed: false,
+    provider: {
+      id: 0,
+      name: '',
+      availability: []
+    },
     selectedAvail: {
       id: 0,
       day: '',
@@ -70,6 +75,26 @@ const initialState: AppState = {
             ...state.clientForm,
             isBooking: !state.clientForm.isBooking,
             provider: (action.payload as ClientProviderAction).provider
+          }
+        }
+      case ActionTypes.CLEAR_CLIENT_FORM:
+        return {
+          ...state,
+          clientForm: {
+            isBooking: false,
+            isSubmitted: false,
+            isConfirmed: false,
+            provider: {
+              id: 0,
+              name: '',
+              availability: []
+            },
+            selectedAvail: {
+              id: 0,
+              day: '',
+              startTime: '',
+              endTime: ''
+            }
           }
         }
       case ActionTypes.UPDATE_CLIENT_IS_SUBMITTING:

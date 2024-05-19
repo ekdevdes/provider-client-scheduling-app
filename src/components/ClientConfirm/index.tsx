@@ -30,7 +30,9 @@ const ClientConfirm: FC<ClientConfirmProps> = ({
     <>
       <Confirm 
         name={clientFirstName} 
-        avails={groupedAvails} /> 
+        desc={`Here's the details for your appointment with ${clientForm.provider.name}, does it look right?`}
+        avails={groupedAvails}
+        showCountdown /> 
       <Paper sx={{ mx: 1, mt: 3, position: 'fixed', bottom: 75, left: 0, right: 0 }} elevation={3}>
         <Box>
           <Button 

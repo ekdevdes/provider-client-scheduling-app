@@ -22,7 +22,10 @@ const ClientDone: FC<ClientDoneProps> = ({
   const clientFirstName = clientRef.current.name.split(' ')[0]
 
   return (
-    <Done name={clientFirstName} desc={`You'll need to bring your insurance card to your appointment with ${clientForm.provider.name}`} />
+    <Done 
+      name={clientFirstName} 
+      desc={`You'll need to bring your insurance card to your appointment with ${clientForm.provider.name}`} 
+    />
   )
 }
 

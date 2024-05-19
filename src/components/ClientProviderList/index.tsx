@@ -48,15 +48,10 @@ const ClientProviderList: FC<ClientProviderListProps> = ({
           // An improvement to make here would be turning the start time to a js date object using luxon for more predicatable sorting
           const firstTimeAvail = sortBy(firstDayAvail, 'startTime')[0]
 
-          console.log({
-            firstDayAvail,
-            firstTimeAvail
-          })
-
           return (
             <Paper elevation={2} sx={{ mb: 2, display: 'flex', p: 2 }}>
               {/* Just getting images from a random image placeholder service for now */}
-              <Avatar alt={provider.name} src="https://picsum.photos/seed/picsum/50/50" sx={{ mr: 1 }} />
+              <Avatar alt={provider.name} src="https://picsum.photos/seed/picsum/50/50" />
               <Typography variant="body1" sx={{ ml: 1 }}>
                 {provider.name}
                 {hasAvails && !isEmpty(firstTimeAvail) ? (

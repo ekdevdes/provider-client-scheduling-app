@@ -27,7 +27,8 @@ const ProviderConfirm: FC<ProviderConfirmProps> = ({
   return (
     <>
       <Confirm 
-        name={providerFirstName} 
+        name={providerFirstName}
+        desc={`Here's what we got, does it look right?`}
         avails={groupedAvails} /> 
       <Paper sx={{ mx: 1, mt: 3, position: 'fixed', bottom: 75, left: 0, right: 0 }} elevation={3}>
         <Box>

@@ -16,7 +16,10 @@ const ProviderDone: FC<ProviderDoneProps> = ({
   const providerFirstName = providerRef.current.name.split(' ')[0]
 
   return (
-    <Done name={providerFirstName} desc="Have a good week" />
+    <Done 
+      name={providerFirstName} 
+      desc="Have a good week"
+    />
   )
 }
 
