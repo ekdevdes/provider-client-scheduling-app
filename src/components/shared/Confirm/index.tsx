@@ -1,7 +1,7 @@
 import { FC, useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from '@reduxjs/toolkit'
-import { Availability, ActionTypes } from '../../types'
+import { Availability, ActionTypes } from '../../../types'
 import { Duration } from 'luxon'
 import isEmpty from 'lodash/isEmpty'
 

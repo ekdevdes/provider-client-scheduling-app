@@ -6,7 +6,7 @@ import {
   ClientForm 
 } from '../../types'
 
-import Done from '../Done'
+import Done from '../shared/Done'
 
 type ClientDoneProps = {
   client: Client,

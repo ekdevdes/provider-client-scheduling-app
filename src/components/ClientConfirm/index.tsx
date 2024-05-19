@@ -8,7 +8,7 @@ import Paper from "@mui/material/Paper"
 import Box from "@mui/material/Box"
 import Button from '@mui/material/Button'
 
-import Confirm from '../Confirm'
+import Confirm from '../shared/Confirm'
 
 type ClientConfirmProps = {
   client: Client

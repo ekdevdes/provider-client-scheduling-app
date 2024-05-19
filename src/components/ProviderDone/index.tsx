@@ -2,7 +2,7 @@ import { FC, useRef } from 'react'
 import { connect } from 'react-redux'
 import { AppState, Provider } from '../../types'
 
-import Done from '../Done'
+import Done from '../shared/Done'
 
 type ProviderDoneProps = {
   provider: Provider
@@ -30,5 +30,6 @@ const mapStateToProps = (state: AppState) => {
     provider: state.providers.find(provider => provider.id === LOGGED_IN_PROVIDER_ID)
   }
 }
+
 
 export default connect(mapStateToProps)(ProviderDone)
