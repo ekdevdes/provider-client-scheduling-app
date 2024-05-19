@@ -57,17 +57,22 @@ const ClientProviderList: FC<ClientProviderListProps> = ({
               <Avatar alt={provider.name} src="https://picsum.photos/seed/picsum/50/50" />
               <Typography variant="body1" sx={{ ml: 1 }}>
                 {provider.name}
-                {hasAvails && !isEmpty(firstTimeAvail) ? (
-                  <Typography variant="subtitle1" sx={{ fontSize: 'small' }}>
-                    First Availability: <span style={{ fontWeight: 'bold' }}>{firstTimeAvail.day} at {firstTimeAvail.startTime}</span>
+                <Typography variant="body1" sx={{ fontSize: 'small' }}>
+                    {hasAvails && !isEmpty(firstTimeAvail) ? (
+                      <>
+                        First Availability: <span style={{ fontWeight: 'bold' }}>{firstTimeAvail.day} at {firstTimeAvail.startTime}</span>
+                      </>
+                    ) : ( <Typography variant="body1" sx={{ fontWeight: 'bold', fontSize: 'small' }}>
+                      No Availability
+                    </Typography>)}
                   </Typography>
-                ) : null}
               </Typography>
               <Button 
                 variant="outlined" 
                 color="error" 
                 size="small" 
                 sx={{ ml: "auto" }}
+                disabled={!hasAvails}
                 onClick={() => {
                   setClientFormIsBooking(provider)
                 }}>
