@@ -29,6 +29,7 @@ const Confirm: FC<ConfirmProps> = ({
   const MAX_EXP_DURATION = 30
   const [expDuration, setExpDuration] = useState<Duration|null>(
     Duration.fromObject({ minutes: MAX_EXP_DURATION })
+    // Duration.fromObject({ seconds: 5 }) // enable for testing
   )
 
   useEffect(() => {
