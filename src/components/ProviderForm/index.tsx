@@ -49,7 +49,7 @@ const ProviderForm: FC<ProviderFormProps> = ({ provider, updateProviderForm }) =
   }, [avails])
 
   // Handy little helper to generate as many time slot components as we need from our counter above
-  const timeSlotComponents = Array.from({ length: timeSlots }, (_, i) => (
+  const timeSlotComponents = Array.from({ length: timeSlots }, (el, i) => (
     <TimeSlot 
       key={i} 
       timeSlots={timeSlots} 
