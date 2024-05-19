@@ -1,7 +1,12 @@
+// If this were a production application I'd likely seperate the types in this file to seperate files 
+// and import them all through this file for ease-of-use and organization
+
+// Basic types
 export type NullableString = string|null
 export type NullableProvider = Provider|null|undefined
 export type NullableNumber = number|null|undefined
 
+// State types
 export type Availability = {
   id: number
   day: string
@@ -49,6 +54,7 @@ export type AppState = {
   clientForm: ClientForm
 }
 
+// Action/Action creator types
 export type ClientProviderAction = {
   provider: Provider
 }

@@ -1,3 +1,4 @@
+// Libs
 import { FC, useRef } from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from '@reduxjs/toolkit'
@@ -10,8 +11,11 @@ import {
 import groupBy from 'lodash/groupBy'
 import sortBy from 'lodash/sortBy'
 import isEmpty from 'lodash/isEmpty'
+
+// Helpers
 import filterAvails from '../../utils/filterAvails'
 
+// Material components
 import Typography from '@mui/material/Typography'
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
@@ -29,7 +33,6 @@ const ClientProviderList: FC<ClientProviderListProps> = ({
   providers,
   setClientFormIsBooking
 }) => {
-  // Refs prevent unncessary re-renders
   const clientRef = useRef(client)
   const clientFirstName = clientRef.current.name.split(' ')[0]
 
@@ -44,19 +47,24 @@ const ClientProviderList: FC<ClientProviderListProps> = ({
       <Box>
         {providers.map(provider => {
           const hasAvails = provider.availability.length
+
+          // First lets remove any availability thats not 24 hours befor ethe current date
+          // Then let's group the remainder by day and grab the first one so we can show a nice little 'First Available' text
           const firstDayAvail = Object.values(
             groupBy(filterAvails(provider.availability), 'day')
           )[0]
 
-          // An improvement to make here would be turning the start time to a js date object using luxon for more predicatable sorting
+          // In a production app we could turn the starTime string to a luxon date object and sort by that to allow for more predictable sorting
           const firstTimeAvail = sortBy(firstDayAvail, 'startTime')[0]
 
           return (
             <Paper elevation={2} sx={{ mb: 2, display: 'flex', p: 2 }} key={provider.id}>
-              {/* Just getting images from a random image placeholder service for now */}
+              {/* In a prod app we'd have the provider image, for now we're just using a placeholder image service */}
               <Avatar alt={provider.name} src="https://picsum.photos/seed/picsum/50/50" />
               <Typography variant="body1" sx={{ ml: 1 }}>
                 {provider.name}
+
+                {/* If the provider has availability in the next 24hrs+ show the first one else just show a "No Availability" text */}
                 <Typography variant="body1" sx={{ fontSize: 'small' }}>
                     {hasAvails && !isEmpty(firstTimeAvail) ? (
                       <>
@@ -75,7 +83,8 @@ const ClientProviderList: FC<ClientProviderListProps> = ({
                 disabled={!hasAvails}
                 onClick={() => {
                   setClientFormIsBooking(provider)
-                }}>
+                }}
+              >
                   Book
               </Button>
             </Paper>
@@ -87,8 +96,7 @@ const ClientProviderList: FC<ClientProviderListProps> = ({
 }
 
 const mapStateToProps = (state: AppState) => {
-  // Typically the client and provider apps would each be seperate and they'd each have the provider/client id on the payload from the JWT
-  // For this app we're just going to hard code it
+  // In a prod app we'd likely get the signed in user id from a JWT or a `useAuth` hook but since this just a simple app we're hardcoding it
   const LOGGED_IN_CLIENT_ID = 1
 
   return {

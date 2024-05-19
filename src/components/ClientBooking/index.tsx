@@ -1,3 +1,4 @@
+// Libs
 import { FC, useRef } from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from '@reduxjs/toolkit'
@@ -11,6 +12,7 @@ import {
   Availability
 } from '../../types'
 
+// Material components
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
@@ -28,9 +30,11 @@ const ClientBooking: FC<ClientBookingProps> = ({
   clientForm,
   setClientFormIsSubmitted
 }) => {
-  // Refs prevent unncessary re-renders
   const clientRef = useRef(client)
   const clientFirstName = clientRef.current.name.split(' ')[0]
+
+  // First remove any provider availability that falls within a <24 hr window
+  // Then group the remaining by day so we can have a "card" for each day with buttons for each available time
   const days = groupBy(filterAvails(clientForm.provider.availability), 'day')
 
   return (
@@ -42,6 +46,7 @@ const ClientBooking: FC<ClientBookingProps> = ({
         Choose a 15 minute time slot from their availability below
       </Typography>
       <Box>
+        {/* Essentially we'll have one "card" for each day with buttons for each available time in the next 24hr+ time window */}
         {!isEmpty(days) ? Object.entries(days).map(([day, avail], i) => (
           <Paper elevation={2} sx={{ mb: 2, display: 'flex', p: 2, flexDirection: 'column' }} key={`booking-day-${i}`}>
             <Box sx={{ mb: 2 }}>
@@ -57,7 +62,8 @@ const ClientBooking: FC<ClientBookingProps> = ({
                   color="error" 
                   size="small" 
                   sx={{ ml: 1 }}
-                  onClick={() => setClientFormIsSubmitted(a)}>
+                  onClick={() => setClientFormIsSubmitted(a)}
+                >
                     {a.startTime}
                 </Button>
               ))}
@@ -70,8 +76,7 @@ const ClientBooking: FC<ClientBookingProps> = ({
 }
 
 const mapStateToProps = (state: AppState) => {
-  // Typically the client and provider apps would each be seperate and they'd each have the provider/client id on the payload from the JWT
-  // For this app we're just going to hard code it
+  // In a prod app we'd likely get the signed in user id from a JWT or a `useAuth` hook but since this just a simple app we're hardcoding it
   const LOGGED_IN_CLIENT_ID = 1
 
   return {

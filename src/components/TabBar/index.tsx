@@ -1,8 +1,10 @@
+// Libs
 import { FC } from 'react';
 import { Dispatch } from '@reduxjs/toolkit';
 import { connect } from "react-redux";
 import { ActionTypes, AppState } from '../../types'
 
+// Material components
 import Box from "@mui/material/Box"
 import BottomNavigation from "@mui/material/BottomNavigation"
 import BottomNavigationAction from "@mui/material/BottomNavigationAction"

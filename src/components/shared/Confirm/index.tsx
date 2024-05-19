@@ -1,3 +1,4 @@
+// Libs
 import { FC, useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from '@reduxjs/toolkit'
@@ -5,6 +6,7 @@ import { Availability, ActionTypes } from '../../../types'
 import { Duration } from 'luxon'
 import isEmpty from 'lodash/isEmpty'
 
+// Material components
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -26,12 +28,14 @@ const Confirm: FC<ConfirmProps> = ({
   showCountdown = false,
   clearClientForm
 }) => {
+  // Helps us keep track of the time for our countdown timer
   const MAX_EXP_DURATION = 30
   const [expDuration, setExpDuration] = useState<Duration|null>(
     Duration.fromObject({ minutes: MAX_EXP_DURATION })
     // Duration.fromObject({ seconds: 5 }) // enable for testing
   )
 
+  // Kicks off the countdown timer for 30 mins by default if the user of this component has enabled it
   useEffect(() => {
     let interval = 0
 
@@ -56,11 +60,11 @@ const Confirm: FC<ConfirmProps> = ({
 
   return (
     <>
+      {/* Show the countdown timer if the time hasn't expired and the user of this component wants it */}
       {showCountdown && !isEmpty(expDuration) ? (
         <Alert severity="info" sx={{ mb: 2 }}>
           <span style={{ fontWeight: 'bold' }}>Head Up!</span> This appointment will expire in&nbsp;
             <span style={{ fontWeight: 'bold'}}>
-              {/* {expDuration.toFormat('mm minutes and ss seconds'))} */}
               {expDuration.toFormat('mm:ss')} seconds
             </span> if not confirmed now
         </Alert>
@@ -68,9 +72,15 @@ const Confirm: FC<ConfirmProps> = ({
       <Typography variant="h4" sx={{ ml: 1, mb: 1 }}>
           Thanks, {name}
       </Typography>
-      <Typography variant="body1" gutterBottom sx={{ ml: 1, mb: 3 }}>
+      <Typography 
+        variant="body1" 
+        gutterBottom 
+        sx={{ ml: 1, mb: 3 }}
+      >
         {desc}
       </Typography>
+      
+      {/* Listing out all the selected availabilities by day and selected time  */}
       <Stack spacing={2}>
         {Object.entries(avails).map(([day, times], i) => (
           <Paper elevation={2} key={`confirm-day-${i}`}>

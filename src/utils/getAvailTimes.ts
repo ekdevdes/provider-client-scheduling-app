@@ -15,14 +15,14 @@ const getAvailTimes = (
   const start = DateTime.fromFormat(startTime, "ha");
   const end = DateTime.fromFormat(endTime, "ha");
   
-  // Create an interval between the start and end times
+  // Helps us find how many 15 minute periods are between the start and end date
   const interval = Interval.fromDateTimes(start, end);
-  
-  // Split the interval into 15-minute segments
   const fifteenMinuteIntervals = interval.splitBy({ minutes: intervalLength });
   
-  // Extract the start time of each segment
-  return fifteenMinuteIntervals.map((segment) => segment.start.toFormat("hh:mma").toLowerCase());
+  // Then we just need to get the start time for each one of those periods, removing any potentially null values along the way
+  return fifteenMinuteIntervals
+    .map((segment) => segment.start?.toFormat("hh:mma").toLowerCase() || '') 
+    .filter(Boolean)
 }
 
 export default getAvailTimes

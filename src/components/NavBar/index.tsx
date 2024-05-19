@@ -1,8 +1,10 @@
+// Libs
 import { FC } from 'react'
 import { connect } from "react-redux"
 import { Dispatch } from '@reduxjs/toolkit'
 import { AppState, ActionTypes, Availability, ProviderForm } from '../../types'
 
+// Material components
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'

@@ -10,9 +10,11 @@ import {
   ClientProviderAction
 } from '../../types'
 
+// In a prod app these would be fetched from an API via thunks
 import { providers } from '../../data/providers.json'
 import { clients } from '../../data/clients.json'
 
+// In a prod app this would be seperated into sep files for provider, client and app state
 const initialState: AppState = {
   activeTabIndex: 0,
   providers: providers,
@@ -39,101 +41,108 @@ const initialState: AppState = {
       endTime: ''
     }
   }
-};
+}
   
-  const appReducer = (state = initialState, action: Action) => {
-    switch (action.type) {
-      case ActionTypes.UPDATE_ACTIVE_TAB_INDEX: 
-        return { ...state, activeTabIndex: (action.payload as TabIndexAction).tabIndex }
-      case ActionTypes.UPDATE_PROVIDER_AVAIL:
-        const _providers = clone(state.providers)
-        let providerIndex = 0
+const reducer = (state = initialState, action: Action) => {
+  switch (action.type) {
+    case ActionTypes.UPDATE_ACTIVE_TAB_INDEX: 
+      return { ...state, activeTabIndex: (action.payload as TabIndexAction).tabIndex }
 
-        const provider: Provider = state.providers.find((provider, index) => {
-          providerIndex = index
+    case ActionTypes.UPDATE_PROVIDER_AVAIL:
+      const _providers = clone(state.providers)
+      let providerIndex = 0
 
-          return provider.id === (action.payload as ProviderUpdateAction).providerId
-        }) ?? { id: 0, name: '', availability: [] }
+      const provider: Provider = state.providers.find((provider, index) => {
+        providerIndex = index
 
-        _providers[providerIndex] = {
-          ...provider,
-          availability: (action.payload as ProviderUpdateAction).avails
+        return provider.id === (action.payload as ProviderUpdateAction).providerId
+      }) ?? { id: 0, name: '', availability: [] }
+
+      _providers[providerIndex] = {
+        ...provider,
+        availability: (action.payload as ProviderUpdateAction).avails
+      }
+      
+      return {
+        ...state,
+        providerForm: {
+          ...state.providerForm,
+          submitted: true
+        },
+        providers: _providers
+      }
+  
+    case ActionTypes.UPDATE_CLIENT_IS_BOOKING:
+      return {
+        ...state,
+        clientForm: {
+          ...state.clientForm,
+          isBooking: !state.clientForm.isBooking,
+          provider: (action.payload as ClientProviderAction).provider
         }
-        
-        return {
-          ...state,
-          providerForm: {
-            ...state.providerForm,
-            submitted: true
+      }
+  
+    case ActionTypes.CLEAR_CLIENT_FORM:
+      return {
+        ...state,
+        clientForm: {
+          isBooking: false,
+          isSubmitted: false,
+          isConfirmed: false,
+          provider: {
+            id: 0,
+            name: '',
+            availability: []
           },
-          providers: _providers
+          selectedAvail: {
+            id: 0,
+            day: '',
+            startTime: '',
+            endTime: ''
+          }
         }
-      case ActionTypes.UPDATE_CLIENT_IS_BOOKING:
+      }
+  
+    case ActionTypes.UPDATE_CLIENT_IS_SUBMITTING:
         return {
           ...state,
           clientForm: {
             ...state.clientForm,
-            isBooking: !state.clientForm.isBooking,
-            provider: (action.payload as ClientProviderAction).provider
+            isSubmitted: !state.clientForm.isSubmitted,
+            selectedAvail: (action.payload as SelectedAvailAction).selectedAvail
           }
         }
-      case ActionTypes.CLEAR_CLIENT_FORM:
+
+    case ActionTypes.UPDATE_CLIENT_IS_CONFIRMING:
         return {
           ...state,
           clientForm: {
-            isBooking: false,
-            isSubmitted: false,
-            isConfirmed: false,
-            provider: {
-              id: 0,
-              name: '',
-              availability: []
-            },
-            selectedAvail: {
-              id: 0,
-              day: '',
-              startTime: '',
-              endTime: ''
-            }
+            ...state.clientForm,
+            isConfirmed: !state.clientForm.isConfirmed
           }
         }
-      case ActionTypes.UPDATE_CLIENT_IS_SUBMITTING:
-          return {
-            ...state,
-            clientForm: {
-              ...state.clientForm,
-              isSubmitted: !state.clientForm.isSubmitted,
-              selectedAvail: (action.payload as SelectedAvailAction).selectedAvail
-            }
-          }
 
-      case ActionTypes.UPDATE_CLIENT_IS_CONFIRMING:
-          return {
-            ...state,
-            clientForm: {
-              ...state.clientForm,
-              isConfirmed: !state.clientForm.isConfirmed
-            }
-          }
-      case ActionTypes.CONFIRM_PROVIDER_FORM:
-        return {
-          ...state,
-          providerForm: {
-            ...state.providerForm,
-            confirmed: !state.providerForm.confirmed
-          }
+    case ActionTypes.CONFIRM_PROVIDER_FORM:
+      return {
+        ...state,
+        providerForm: {
+          ...state.providerForm,
+          confirmed: !state.providerForm.confirmed
         }
-      case ActionTypes.UPDATE_PROVIDER_FORM: 
-        return {
-          ...state,
-          providerForm: {
-            ...state.providerForm,
-            ...action.payload as ProviderUpdateAction
-          }
-        }
-      default:
-        return state;
-    }
-  };
+      }
   
-  export default appReducer;
+    case ActionTypes.UPDATE_PROVIDER_FORM: 
+      return {
+        ...state,
+        providerForm: {
+          ...state.providerForm,
+          ...action.payload as ProviderUpdateAction
+        }
+      }
+
+    default:
+      return state;
+  }
+}
+  
+export default reducer

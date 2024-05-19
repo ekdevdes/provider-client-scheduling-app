@@ -1,3 +1,4 @@
+// Libs
 import { FC, useRef } from 'react'
 import { connect } from 'react-redux'
 import { 
@@ -6,6 +7,7 @@ import {
   ClientForm 
 } from '../../types'
 
+// Internal components
 import Done from '../shared/Done'
 
 type ClientDoneProps = {
@@ -18,7 +20,6 @@ const ClientDone: FC<ClientDoneProps> = ({
   clientForm,
 }) => {
   const clientRef = useRef<Client>(client)
-
   const clientFirstName = clientRef.current.name.split(' ')[0]
 
   return (
@@ -30,6 +31,7 @@ const ClientDone: FC<ClientDoneProps> = ({
 }
 
 const mapStateToProps = (state: AppState) => {
+    // In a prod app we'd likely get the signed in user id from a JWT or a `useAuth` hook but since this just a simple app we're hardcoding it
   const LOGGED_IN_CLIENT_ID = 1
   
   return {

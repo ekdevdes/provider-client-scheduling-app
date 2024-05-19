@@ -1,7 +1,9 @@
+// Libs
 import { FC, useRef } from 'react'
 import { connect } from 'react-redux'
 import { AppState, Provider } from '../../types'
 
+// Internal components
 import Done from '../shared/Done'
 
 type ProviderDoneProps = {

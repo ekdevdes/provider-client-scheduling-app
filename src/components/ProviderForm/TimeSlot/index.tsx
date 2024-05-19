@@ -1,12 +1,15 @@
+// Libs
 import React, { FC , useState, useEffect, useRef } from 'react'
+import { Availability } from '../../../types'
 import isEmpty from 'lodash/isEmpty'
 import find from 'lodash/find'
 import findIndex from 'lodash/findIndex'
 import clone from 'lodash/cloneDeep'
 
-import { Availability } from '../../../types'
+// Helpers
 import generateRandomNumber from '../../../utils/generateRandomNumber'
 
+// Material components
 import Box from "@mui/material/Box"
 import Button from '@mui/material/Button'
 import InputLabel from '@mui/material/InputLabel'
@@ -31,16 +34,19 @@ const TimeSlot: FC<TimeSlotProps> = ({
   setTimeSlots,
   setAvails,
 }) => {
+  // We need an id to help determine if the current set of availability info has been saved before or not
   const id = useRef<number>(generateRandomNumber())
+
+  // Then we just have a few props here for the values of the various dropdowns
   const [day, setDay] = useState<string>('')
   const [startTime, setStartTime] = useState<string>('')
   const [endTime, setEndTime] = useState<string>('')
 
   useEffect(() => {
-    // does our curent set of avail info exist already?
+    // Does this availability info already exist in the parent ProviderForm component?
     const currentAvail = find(avails, { id: id.current })
 
-    // current set of avail info doesn't exist in the form component :(
+    // If not then we have to save it
     if (isEmpty(currentAvail)) {
       setAvails([
         ...avails,
@@ -52,8 +58,8 @@ const TimeSlot: FC<TimeSlotProps> = ({
         }
       ])
     } else {
-      // If it does exist then we have to find its index before we can update
-      // But since react state update is memory based we  have to copy the array first
+      // If so, then we have to find the index, clone the array (b/c react's updates are memory address based), do the update 
+      // and then set the current availability info to the clone we just created
       const _avails = clone(avails)
       const currentAvailIndex = findIndex(_avails, { id: id.current })
 
@@ -120,7 +126,7 @@ const TimeSlot: FC<TimeSlotProps> = ({
               }
             }}
           >
-            {/* Using slice here to not allow the provider to be able to set times from 8am to 8am */}
+            {/* The `slice` here helps ensure the provider can't set their availability to 8am to 8am */}
             {availTimes.slice(1).map((time, i) => (
               <MenuItem value={time} key={`end-${i}`}>{time}</MenuItem>
             ))}
@@ -133,7 +139,10 @@ const TimeSlot: FC<TimeSlotProps> = ({
           sx={{ ml: "auto", color: "error.main" }}
           onClick={() => {
             setTimeSlots(timeSlots - 1)
-          }}>Remove</Button>
+          }}
+        >
+          Remove
+        </Button>
       </Box>
     </>
   )

@@ -1,9 +1,10 @@
-// src/store/store.js
-import { configureStore } from '@reduxjs/toolkit';
-import appReducer from './reducers'; 
+import { configureStore } from '@reduxjs/toolkit'
+import reducer from './reducers'
 
+// In a production application I'd have one reducer for providers, one for clients and one for app state
+// And combine them using `combineReducers`
 const store = configureStore({
-  reducer: appReducer, 
-});
+  reducer
+})
 
-export default store;
+export default store

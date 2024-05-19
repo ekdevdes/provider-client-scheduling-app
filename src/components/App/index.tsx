@@ -1,3 +1,4 @@
+// Libs
 import { FC } from 'react'
 import { connect } from "react-redux"
 import { 
@@ -6,6 +7,10 @@ import {
   ClientForm as ClientFormType 
 } from '../../types'
 
+// Material components
+import Box from '@mui/material/Box'
+
+// Internal components
 import TabBar from '../TabBar'
 import NavBar from '../NavBar'
 import ProviderForm from '../ProviderForm'
@@ -16,6 +21,7 @@ import ClientBooking from '../ClientBooking'
 import ClientConfirm from '../ClientConfirm'
 import ClientDone from '../ClientDone'
 
+// Styles
 import './index.scss';
 
 type AppProps = {
@@ -31,19 +37,23 @@ const App: FC<AppProps> = ({
 }) => {
   const isProviderTabActive = activeTabIndex === 0
 
+  // This is the meat the of the rendering logic for the application
+  // In a prod app I might extract this to a seperate file and just pass in `providerForm` and `clientForm` to make *this* file a little shorter
   const renderPage = () => {
+    // Provider app
     if (isProviderTabActive) {
-        if (providerForm.submitted && !providerForm.confirmed) {
-          return (<ProviderConfirm />)
-        }
+      if (providerForm.submitted && !providerForm.confirmed) {
+        return (<ProviderConfirm />)
+      }
 
-        if (providerForm.submitted && providerForm.confirmed) {
-          return (<ProviderDone />)
-        }
+      if (providerForm.submitted && providerForm.confirmed) {
+        return (<ProviderDone />)
+      }
 
-        return (<ProviderForm />)
+      return (<ProviderForm />)
     }
 
+    // Client app
     if (!clientForm.isBooking && !clientForm.isSubmitted && !clientForm.isConfirmed) {
       return (<ClientProviderList />)
     } else if (clientForm.isBooking && !clientForm.isSubmitted && !clientForm.isConfirmed) {
@@ -53,17 +63,15 @@ const App: FC<AppProps> = ({
     } else {
       return (<ClientDone />)
     }
-
-    return null
   }
 
   return (
     <>
       <NavBar />
-      <div className="app">
+      <Box sx={{ mt: '1.25rem', mr: '5px', ml: '5px', mb: '1.25rem' }}>
         {renderPage()}
         <TabBar />
-      </div>
+      </Box>
     </>
   )
 }

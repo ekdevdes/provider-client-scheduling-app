@@ -1,13 +1,16 @@
+// Libs
 import { FC, useRef } from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from '@reduxjs/toolkit'
 import { AppState, Provider, ActionTypes } from '../../types'
 import groupBy from 'lodash/groupBy'
 
+// Material components
 import Paper from "@mui/material/Paper"
 import Box from "@mui/material/Box"
 import Button from '@mui/material/Button'
 
+// Internal components
 import Confirm from '../shared/Confirm'
 
 type ProviderConfirmProps = {
@@ -19,9 +22,11 @@ const ProviderConfirm: FC<ProviderConfirmProps> = ({
   provider,
   confirmProviderForm,
 }) => {
+  // Refs help us prevent unncessary re-renders for info that doesn't change often
   const providerRef = useRef<Provider>(provider)
-
   const providerFirstName = providerRef.current.name.split(' ')[0]
+
+  // First, let's group their selected availability by day for a nicer output
   const groupedAvails = groupBy(providerRef.current.availability, 'day')
 
   return (
@@ -37,11 +42,12 @@ const ProviderConfirm: FC<ProviderConfirmProps> = ({
             color="error" 
             sx={{ width: '100%' }}
             onClick={() => {
-              // This is where we'd make the api request to save the provider avails to the API
+              // This is where we'd make the API request to save the provider availability to the API
 
               // Then mark the form as done to show the success screen
               confirmProviderForm()
-            }}>
+            }}
+          >
             Done
           </Button>
         </Box>
