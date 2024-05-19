@@ -7,7 +7,7 @@ A simple little app to allow providers to set their availability and clients to 
 - `cd provider-client-scheduling-app`
 - `npm i`
   - ℹ️ **Note:** This project uses Node `v20.13.1` and npm `v10.5.2`. You'll find an `.nvmrc` in the root of this repo to ensure these versions are respected
-  - If your terminal is not setup to auto-load node and npm versions from `.nvmrc` files, copy the below code and add it to your `.zshrc` or `.bashrc`. Once done, reload your terminal and it should automagically ✨ load in the right version:
+  - If your terminal is not setup to auto-load node and npm versions from `.nvmrc` files, copy the below code and add it to your `.zshrc`. Once done, reload your terminal and it should automagically ✨ load in the right version:
     ```bash
       autoload -U add-zsh-hook
       load-nvmrc() {
@@ -36,20 +36,20 @@ A simple little app to allow providers to set their availability and clients to 
 
 # Inspiration
 - The provider availability selection screen was inspired by the Greenhouse interview availabiliy screen
-- The app theme (the red) was inspired by CVS's design scheme
+- The app theme (the red and white) was inspired by CVS's design scheme
 - The client screens were inspired by some shots on Dribbble I found for similar client/provider apps
 
 # Improvements
 ## For an MVP (Minimum Viable Product)
-- I've sprinkled comments throughout the app providing suggestions on what I'd do if this were a production app but I'll summarize my top ones here. 
+- I've sprinkled comments throughout the app providing suggestions on what I'd do if this were a production app but I'll summarize my top ones below 
 - This list would specifically be, what I think would be necessary to launch a 1st version of this app:
-  - When a provider adds more then 5 availability days the z-index and scrolling on the form screen get messed up
+  - When a provider adds more then 5 availability days the `z-index` and scrolling on the form screen get a little wonky
   - I'd use a JWT or a `useAuth` hook to get the id of the logged in user instead of hardcoding them
-  - I'd add React Router for public facing URLs and add a way to go back after finishing the flow for providers and clients
-  - I'd have to talk with the designers of this app if they wanted it to be more resposive on Desktop and Tablet before launch and if so work that into the roadmap
+  - I'd add React Router for public facing URLs and add a way to go back after finishing the flow for both the providers and clients
+  - For this last one I'd have to talk with the designers to see what their intentions for this app are. If they want it to solely be a mobile app then we'd just have the things above to address, if they wanted it to be more desktop and tablet responsive before launch then we'd have to add a few styles (I'm thinking `useMediaQuery` in Material UI or the different breakpoints in the `sx` prop on various components)
 
- ## Fast Follow improvements
+ ## Fast Follow (version 2) improvements
  If this were an actual production application, these are the things I'd fix after the initial launch:
-  - For the client booking screen I'd want to make the URLs were shareable with those not logged in for easy texting and emailing
-  - Add a few additional config files to enable prettier formatting on save to make it easier for the team to work on together and not have to worry about fixing pesky ESLint issues that could be auto-fixed
+  - For the client booking screen I'd want to make the URLs for the various provider availability screens shareable with those not logged in for easy texting and emailing
   - I'd ensure the color contrast and aria roles are used properly for better accessibility
+  - Add a few additional config files to enable prettier formatting on save to make it easier for the team to work on together and not have to worry about fixing pesky ESLint issues that could be auto-fixed
