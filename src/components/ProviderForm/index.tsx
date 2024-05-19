@@ -41,9 +41,9 @@ const ProviderForm: FC<ProviderFormProps> = ({ provider, updateProviderForm }) =
     }
   }, [avails])
 
-  const timeSlotComponents = Array.from({ length: timeSlots }, (_, index) => (
+  const timeSlotComponents = Array.from({ length: timeSlots }, (_, i) => (
     <TimeSlot 
-      key={index} 
+      key={i} 
       timeSlots={timeSlots} 
       availDays={availDays.current}
       availTimes={availTimes.current}

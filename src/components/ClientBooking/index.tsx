@@ -43,16 +43,17 @@ const ClientBooking: FC<ClientBookingProps> = ({
         Choose a 15 minute time slot from their availability below
       </Typography>
       <Box>
-        {!isEmpty(days) ? Object.entries(days).map(([day, avail]) => (
-          <Paper elevation={2} sx={{ mb: 2, display: 'flex', p: 2, flexDirection: 'column' }}>
+        {!isEmpty(days) ? Object.entries(days).map(([day, avail], i) => (
+          <Paper elevation={2} sx={{ mb: 2, display: 'flex', p: 2, flexDirection: 'column' }} key={`booking-day-${i}`}>
             <Box sx={{ mb: 2 }}>
               <Typography variant="h6" sx={{ ml: 1 }}>
                 {day}
               </Typography>
             </Box>
             <Box>
-              {avail.map((a) => (
+              {avail.map((a, j) => (
                 <Button 
+                  key={`booking-confirm-time-${i}-${j}`}
                   variant="outlined" 
                   color="error" 
                   size="small" 

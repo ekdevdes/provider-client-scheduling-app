@@ -72,14 +72,14 @@ const Confirm: FC<ConfirmProps> = ({
         {desc}
       </Typography>
       <Stack spacing={2}>
-        {Object.entries(avails).map(([day, times]) => (
-          <Paper elevation={2}>
+        {Object.entries(avails).map(([day, times], i) => (
+          <Paper elevation={2} key={`confirm-day-${i}`}>
             <Typography variant="h6" sx={{ fontWeight: 'bold', m: 2, mb: 0 }}>
               {day}
             </Typography>
             <Box sx={{ m: 2, mt: 1 }}>
-              {times.map(time => (
-                <Typography variant="body1">
+              {times.map((time, j) => (
+                <Typography variant="body1" key={`confirm-${i}-${j}`}>
                   {time.startTime} - {time.endTime}
                 </Typography>
               ))}

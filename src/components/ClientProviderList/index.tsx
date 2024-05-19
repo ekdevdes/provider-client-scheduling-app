@@ -49,7 +49,7 @@ const ClientProviderList: FC<ClientProviderListProps> = ({
           const firstTimeAvail = sortBy(firstDayAvail, 'startTime')[0]
 
           return (
-            <Paper elevation={2} sx={{ mb: 2, display: 'flex', p: 2 }}>
+            <Paper elevation={2} sx={{ mb: 2, display: 'flex', p: 2 }} key={provider.id}>
               {/* Just getting images from a random image placeholder service for now */}
               <Avatar alt={provider.name} src="https://picsum.photos/seed/picsum/50/50" />
               <Typography variant="body1" sx={{ ml: 1 }}>

@@ -84,8 +84,8 @@ const TimeSlot: FC<TimeSlotProps> = ({
               }
             }}
           >
-            {availDays.map(day => (
-              <MenuItem value={day}>{day}</MenuItem>
+            {availDays.map((day, i) => (
+              <MenuItem value={day} key={`day-${i}`}>{day}</MenuItem>
             ))}
           </Select>
         </FormControl>
@@ -102,8 +102,8 @@ const TimeSlot: FC<TimeSlotProps> = ({
               }
             }}
           >
-            {availTimes.map(time => (
-              <MenuItem value={time}>{time}</MenuItem>
+            {availTimes.map((time, i) => (
+              <MenuItem value={time} key={`start-${i}`}>{time}</MenuItem>
             ))}
           </Select>
         </FormControl>
@@ -121,8 +121,8 @@ const TimeSlot: FC<TimeSlotProps> = ({
             }}
           >
             {/* Using slice here to not allow the provider to be able to set times from 8am to 8am */}
-            {availTimes.slice(1).map(time => (
-              <MenuItem value={time}>{time}</MenuItem>
+            {availTimes.slice(1).map((time, i) => (
+              <MenuItem value={time} key={`end-${i}`}>{time}</MenuItem>
             ))}
           </Select>
         </FormControl>
