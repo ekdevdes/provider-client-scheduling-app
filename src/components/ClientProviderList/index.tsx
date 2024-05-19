@@ -10,6 +10,7 @@ import {
 import groupBy from 'lodash/groupBy'
 import sortBy from 'lodash/sortBy'
 import isEmpty from 'lodash/isEmpty'
+import filterAvails from '../../utils/filterAvails'
 
 import Typography from '@mui/material/Typography'
 import Avatar from '@mui/material/Avatar'
@@ -43,7 +44,9 @@ const ClientProviderList: FC<ClientProviderListProps> = ({
       <Box>
         {providers.map(provider => {
           const hasAvails = provider.availability.length
-          const firstDayAvail = Object.values(groupBy(provider.availability, 'day'))[0]
+          const firstDayAvail = Object.values(
+            groupBy(filterAvails(provider.availability), 'day')
+          )[0]
 
           // An improvement to make here would be turning the start time to a js date object using luxon for more predicatable sorting
           const firstTimeAvail = sortBy(firstDayAvail, 'startTime')[0]

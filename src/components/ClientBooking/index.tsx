@@ -12,10 +12,10 @@ import {
 } from '../../types'
 
 import Typography from '@mui/material/Typography'
-import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Button from '@mui/material/Button'
+import filterAvails from '../../utils/filterAvails'
 
 type ClientBookingProps = {
   client: Client,
@@ -31,8 +31,7 @@ const ClientBooking: FC<ClientBookingProps> = ({
   // Refs prevent unncessary re-renders
   const clientRef = useRef(client)
   const clientFirstName = clientRef.current.name.split(' ')[0]
-
-  const days = groupBy(clientForm.provider.availability, 'day')
+  const days = groupBy(filterAvails(clientForm.provider.availability), 'day')
 
   return (
     <div>
